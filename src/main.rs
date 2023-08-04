@@ -14,12 +14,18 @@ impl Library {
         if !self.path.exists() {
             std::fs::create_dir(&self.path).unwrap();
         }
+
+        let files = std::fs::read_dir(&self.path).unwrap();
+        for file in files {
+            let path = file.unwrap().path();
+            println!("{}", path.display());
+        }
     }
 }
 
 fn main() {
-    let home = home::home_dir().unwrap();
-    let library = Library::new(String::from("Default"), home.join("Books"));
+    let root = home::home_dir().unwrap().join("Books");
+    let library = Library::new(String::from("Default"), root);
 
     library.init();
 
