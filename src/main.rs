@@ -1,9 +1,5 @@
 use epub::doc::EpubDoc as EpubDocument;
-use std::{
-    fs::File,
-    io::{BufReader, Read},
-    path::PathBuf,
-};
+use std::path::PathBuf;
 
 struct Library {
     name: String,
