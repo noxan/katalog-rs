@@ -1,4 +1,5 @@
 use std::{
+    fs::File,
     io::{BufReader, Read},
     path::PathBuf,
 };
@@ -10,6 +11,13 @@ struct Book {
 impl Book {
     fn new(filename: PathBuf) -> Book {
         Book { filename }
+    }
+
+    fn read_file(&self, filename: &str, mut archive: zip::ZipArchive<BufReader<&File>>) -> String {
+        let mut contents = String::new();
+        let mut file = archive.by_name(filename).unwrap();
+        file.read_to_string(&mut contents).unwrap();
+        return contents;
     }
 
     fn read(&self) {
@@ -25,10 +33,9 @@ impl Book {
         }
 
         let filename = "META-INF/container.xml";
-        let mut contents = String::new();
-        let mut file = archive.by_name(filename).unwrap();
-        file.read_to_string(&mut contents).unwrap();
-        println!("{}", contents);
+        // println!("{}", self.read_file(filename, archive));
+
+        println!("{}", self.read_file("OPS/package.opf", archive));
     }
 }
 
