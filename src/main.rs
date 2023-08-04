@@ -1,12 +1,29 @@
+use std::path::PathBuf;
+
+struct Library {
+    name: String,
+    path: PathBuf,
+}
+
+impl Library {
+    fn new(name: String, path: PathBuf) -> Library {
+        Library { name, path }
+    }
+
+    fn init(&self) {
+        if !self.path.exists() {
+            std::fs::create_dir(&self.path).unwrap();
+        }
+    }
+}
+
 fn main() {
     let home = home::home_dir().unwrap();
-    let root = home.join("Books");
+    let library = Library::new(String::from("Default"), home.join("Books"));
 
-    println!("Directory: {}", root.display());
+    library.init();
 
-    if !root.exists() {
-        std::fs::create_dir(&root).unwrap();
-    }
+    println!("Library '{}' at {}", library.name, library.path.display());
 
     println!("Hello, world!");
 }
