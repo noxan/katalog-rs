@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 home = "0.5.5"
+zip = "0.6.6"
