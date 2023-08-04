@@ -4,5 +4,9 @@ fn main() {
 
     println!("Directory: {}", root.display());
 
+    if !root.exists() {
+        std::fs::create_dir(&root).unwrap();
+    }
+
     println!("Hello, world!");
 }
