@@ -28,7 +28,8 @@ impl Library {
         let files = std::fs::read_dir(&self.path).unwrap();
         for file in files {
             let path = file.unwrap().path();
-            println!("{}", path.display());
+            let book = Book::new(path);
+            println!("{:?}", book.filename);
         }
     }
 }
@@ -37,7 +38,6 @@ fn main() {
     let root = home::home_dir().unwrap().join("Books");
     let library = Library::new(String::from("Default"), root);
 
-    library.init();
-
     println!("Library '{}' at {}", library.name, library.path.display());
+    library.init();
 }
