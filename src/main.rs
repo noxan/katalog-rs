@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::{io::BufReader, path::PathBuf};
 
 struct Book {
     filename: PathBuf,
@@ -7,6 +7,19 @@ struct Book {
 impl Book {
     fn new(filename: PathBuf) -> Book {
         Book { filename }
+    }
+
+    fn read(&self) {
+        println!("Reading {}", self.filename.display());
+
+        let file = std::fs::File::open(&self.filename).unwrap();
+        let reader = BufReader::new(&file);
+        let zip = zip::ZipArchive::new(reader).unwrap();
+
+        let files = zip.file_names();
+        for file in files {
+            println!("{}", file);
+        }
     }
 }
 
