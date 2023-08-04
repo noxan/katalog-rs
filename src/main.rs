@@ -1,5 +1,15 @@
 use std::path::PathBuf;
 
+struct Book {
+    filename: PathBuf,
+}
+
+impl Book {
+    fn new(filename: PathBuf) -> Book {
+        Book { filename }
+    }
+}
+
 struct Library {
     name: String,
     path: PathBuf,
