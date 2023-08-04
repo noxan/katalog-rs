@@ -1,4 +1,7 @@
-use std::{io::BufReader, path::PathBuf};
+use std::{
+    io::{BufReader, Read},
+    path::PathBuf,
+};
 
 struct Book {
     filename: PathBuf,
@@ -14,12 +17,18 @@ impl Book {
 
         let file = std::fs::File::open(&self.filename).unwrap();
         let reader = BufReader::new(&file);
-        let zip = zip::ZipArchive::new(reader).unwrap();
+        let mut archive = zip::ZipArchive::new(reader).unwrap();
 
-        let files = zip.file_names();
+        let files = archive.file_names();
         for file in files {
             println!("{}", file);
         }
+
+        let filename = "META-INF/container.xml";
+        let mut contents = String::new();
+        let mut file = archive.by_name(filename).unwrap();
+        file.read_to_string(&mut contents).unwrap();
+        println!("{}", contents);
     }
 }
 
