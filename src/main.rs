@@ -24,6 +24,4 @@ fn main() {
     library.init();
 
     println!("Library '{}' at {}", library.name, library.path.display());
-
-    println!("Hello, world!");
 }
