@@ -25,6 +25,12 @@ impl Library {
             let path = file.unwrap().path();
             println!("{:?}", path.display());
         }
+
+        let files = std::fs::read_dir(&self.path).unwrap();
+        let file = files.into_iter().next().unwrap().unwrap().path();
+        println!("{:?}", file);
+        let epub = EpubDocument::new(file).unwrap();
+        println!("{:?}", epub);
     }
 }
 
