@@ -25,8 +25,9 @@ impl Library {
         let files = std::fs::read_dir(&self.path).unwrap();
         let file = files.into_iter().next().unwrap().unwrap().path();
         println!("{:?}", file);
-        let epub = EpubDocument::new(file).unwrap();
-        println!("{:?}", epub);
+        let mut epub = EpubDocument::new(file).unwrap();
+        println!("{:?}", epub.metadata);
+        println!("{:?}", epub.get_cover_id().unwrap())
     }
 }
 
